@@ -1,0 +1,69 @@
+# Code for Job 1
+------------------
+rm -rf /host/web-repo
+mkdir -p /host/web-repo
+cp -r . /host/web-repo
+
+------------------------------------
+
+# Code for Job2 
+-------------------------------------
+chroot /host /bin/bash <<"EOT"
+file=$(ls /web-repo)
+ext="${file##*.}"
+
+if [ "$ext" == "html" ]
+then 
+	if sudo docker ps | grep prod_env
+	then 
+		sudo docker  rm -f prod_env
+		sudo docker run -dit -p 8082:80 -v /web-repo:/usr/local/apache2/htdocs --name prod_env httpd:latest
+	else
+		sudo docker run -dit -p 8082:80 -v /web-repo:/usr/local/apache2/htdocs --name prod_env httpd:latest
+    fi
+elif [ "$ext" == "php" ]
+then
+	if sudo docker ps | grep prod_env
+	then 
+		sudo docker rm -f prod_env
+		sudo docker run -dit -p 8082:80 -v /web-repo:/var/www/html --name prod_env vimal13/apache-webserver-php
+	else
+		sudo docker run -dit -p 8082:80 -v /web-repo:/var/www/html --name prod_env vimal13/apache-webserver-php
+	fi
+fi
+EOT
+
+# Code for Job3 
+-------------------------------------------------------------------------------------------
+
+export status=$(curl -s -i -w "%{http_code}" -o /dev/null http://your-ip-address:8082/index.html)
+if [ status==200 ]
+then
+	echo "Code Validation Successful"
+	exit 0
+else
+	echo "Code Validation UnSuccessful"
+	python3 /mail.py
+fi
+--------------------------------------------------------------------------------------------------
+
+# Code for Job 4
+-----------------------------------------------------------------------------------------------------
+chroot /host /bin/bash <<"EOT"
+file=$(ls /web-repo)
+ext="${file##*.}"
+if sudo docker ps | grep prod_env
+then
+	exit 0
+else
+	sudo docker  rm -f prod_env
+    if [ "$ext" == "html" ]
+	then 
+    	sudo docker run -dit -p 8082:80 -v /web-repo:/usr/local/apache2/htdocs --name prod_env httpd:latest
+	elif [ "$ext" == "php" ]
+    then
+		sudo docker run -dit -p 8082:80 -v /web-repo:/var/www/html --name prod_env vimal13/apache-webserver-php
+	fi
+fi
+EOT
+-------------------------------------------------------------------------------------------------------------------------
