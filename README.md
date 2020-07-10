@@ -6,6 +6,7 @@ This repository contains code for task and project that undergone during Devops-
 Whenever the developer push the code to Github in dev1 branch , our system(Jenkins) should automatically pull the code and deploy the code in Test Docker Environment(testenv). 
 
  Git(Dev1 Branch) → Docker(testenv)
+ * [AngularJS]
  
 * [JOB 2]
 If Developer push to master branch , then Jenkins will fetch from master branch and deploy it on Production Docker Environment(prodenv).
