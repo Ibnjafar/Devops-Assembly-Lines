@@ -2,7 +2,7 @@
 This repository contains code for task and project that undergone during Devops-Assembly-Lines Internship.
 
 # TASK 1 : Lets Deploy our web-server from Git2Docker
--JOB 1
+>JOB 1
 Whenever the developer push the code to Github in dev1 branch , our system(Jenkins) should automatically pull the code and deploy the code in Test Docker Environment(testenv). 
 
  Git(Dev1 Branch) → Docker(testenv)
