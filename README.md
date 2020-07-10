@@ -3,17 +3,20 @@ This repository contains code for task and project that undergone during Devops-
 
 # TASK 1 : Lets Deploy our web-server from Git2Docker
 >JOB 1
+
 Whenever the developer push the code to Github in dev1 branch , our system(Jenkins) should automatically pull the code and deploy the code in Test Docker Environment(testenv). 
 
  Git(Dev1 Branch) → Docker(testenv)
  
-- JOB 2
+>JOB 2
+
 If Developer push to master branch , then Jenkins will fetch from master branch and deploy it on Production Docker Environment(prodenv).
 
 Git(master Branch) → Docker(prodenv)
-* Note:
+*Note:
+
 Both test-docker and master-docker environment are on different docker containers.
-* [JOB 3]
+>JOB 3
 
 Manually the QA team will check (test) for the website running in testenv. If it is running fine then Jenkins will merge the dev1 branch to master branch and trigger job 2 (i.e., launch Production Docker Environment prodenv )
 
