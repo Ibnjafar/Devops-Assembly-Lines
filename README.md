@@ -14,7 +14,7 @@ If Developer push to master branch , then Jenkins will fetch from master branch
 
 Git(master Branch) → Docker(prodenv)
 
-*Note:
+* [Note:]
 
 Both test-docker and master-docker environment are on different docker containers.
 
